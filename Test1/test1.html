@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="jmobile/jquery.mobile-1.4.5.css">
+		<script type="text/javascript" src="jmobile/jquery.js"></script>
+		<script type="text/javascript" src="jmobile/jquery.mobile-1.4.5.js"></script>
+	</head>
+	<body>
+		<div data-role="page" id="kalku">
+			<div data-role=header>
+				<h1>Kalkulator</h1>
+			</div>
+			<div data-role=content>
+				<select onchange="document.location.href=this.value">
+					<option selected value="">Menu</option>
+				    <option value="#RGB">RGB</option>
+				    <option value="#learn">Comment</option>
+				</select>
+				<div data-role=tabs id=tabs>
+					<div data-role=navbar>
+						<ul>
+							<li><a href="#factor">Factorial</a></li>
+							<li><a href="#up">Pangkat</a></li>
+						</ul>
+						<div id=factor>
+							<form>
+							   	<label>Input Angka Factorial :</label>
+							    <input type="number" class="calc-input" />
+							    <button type="button" class="btn btn-primary">Submit</button>
+							    <br>Hasil :
+							    <label class="calc-output" />
+							</form>
+						</div>
+						<div id=up>
+							<label for="angka">
+								Angka :
+							</label>
+							<input name="num1" id="num1" type="number"/>
+							<label for="pangkatangka">
+								Pangkat :
+							</label>
+							<input name="num2" id="num2" type="number"/>
+							<input id="btnpan" type="submit" value="Submit" onclick="pangkat();"/>
+							<label>Hasil :</label>
+							<span id="showresult"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div data-role=footer data-position=fixed>
+				<h1>Footer</h1>
+			</div>
+		</div>
+		<div data-role="page" id="RGB">
+			<div data-role=header>
+				<h1>RGB</h1>
+			</div>
+			<div data-role=content>
+				<select onchange="document.location.href=this.value">
+					<option selected value="">Menu</option>
+				    <option value="#kalku">Kalkulator</option>
+				    <option value="#learn">Comment</option>
+				</select>
+				<div class="ui-grid-b">
+	                <div class="ui-block-a">
+	                    <label for="red">Red :</label>
+	                    <input type="range" id="red" min="0" max="255" value="0">
+	                </div>
+
+	                <div class="ui-block-b">
+	                     <label for="blue">Blue :</label>
+	                    <input type="range" id="blue" min="0" max="255" value="0">
+	                </div>
+
+	                <div class="ui-block-c">
+	                    <label for="green">Green :</label>
+	                    <input type="range" id="green" min="0" max="255" value="0">
+	                </div>
+	                <button data-theme="a" class="key" id="color">Coba</button>
+           			<input type="text" id="result" value="" disabled>
+          		</div>
+				<div data-role=footer data-position=fixed>
+					<h1>Footer</h1>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="learn">
+			<div data-role=header>
+				<h1>Comment</h1>
+			</div>
+			<div data-role=content>
+				<select onchange="document.location.href=this.value">
+					<option selected value="">Menu</option>
+				    <option value="#kalku">Kalkulator</option>
+				    <option value="#RGB">RGB</option>
+				</select>
+				<label>Slider :</label>
+				<input type="range" name="slider-1" id="slider-1" value="0" min="0" max="100" data-highlight="true">
+				<a href=#pop data-rel="popup" class="ui-btn ui-corner ui-shadow ui-btn-inline" data-transition="pop">Popup</a>
+				<div data-role=popup id=pop>
+					<p>Try PopUp</p>
+				</div>
+				<div id="loader">
+					<button class="show-page-loading-msg" data-textonly="true" data-textvisible="true" data-msgtext="Text only loader" data-inline="true">Loader</button>
+					<button class="hide-page-loading-msg" data-inline="true" data-icon="delete">Hide</button>
+				</div>
+				<div id="PPM">
+					<h2>Yang saya dapat dari PPM selama ini</h2><br>
+					Dari pertemuan pertama yaitu github, github dapat memudahkan kita sebagai programmer untuk mengerjakan suatu project bersama orang lain. Pertemuan selanjutnya kita mulai belajar tentang jquery mobile beserta dengan element-elementnya. Pertemuan yang terakhir membahas tentang Angularjs.
+				</div>
+			</div>
+			<div data-role=footer data-position=fixed>
+				<h1>Footer</h1>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$("form").on("click", "button", function (e) {
+			    e.preventDefault();
+			    var factorialNum = $(".calc-input").val();
+			    factorial(factorialNum);
+			});
+
+			function factorial(num) {
+			    var newNum = num;
+			    var total;
+			    var numArray = [];
+			    for (i = 0; num > i; i++) {
+			        total = num - i;
+			        numArray.push(total);
+			    };
+			    console.log(numArray);
+			    for (j = 0; numArray.length > j; j++) {
+			        if (numArray[j] == newNum) {
+			            newNum = numArray[j];
+			        } else {
+			            newNum = newNum * numArray[j];
+			            $(".calc-output").text(newNum);
+			        }
+			    };
+			};
+
+			function pangkat() {
+				var num1 = document.getElementById('num1').value;
+				var num2 = document.getElementById('num2').value;
+				var result = num1;
+				for (i=0;num2!=i;i++) {
+					result = result*num1;
+				}
+				result = result/num1;
+				document.getElementById('showresult').innerHTML = (result);
+			}
+			$("#color").click(function(){
+       		$("#result").css("background-color", `rgb(${$("#red").val()},${$("#green").val()},${$("#blue").val()})`);
+        	});
+        	$( document ).on( "click", ".show-page-loading-msg", function() {
+			    var $this = $( this ),
+			        theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
+			        msgText = $this.jqmData( "msgtext" ) || $.mobile.loader.prototype.options.text,
+			        textVisible = $this.jqmData( "textvisible" ) || $.mobile.loader.prototype.options.textVisible,
+			        textonly = !!$this.jqmData( "textonly" );
+			        html = $this.jqmData( "html" ) || "";
+			    $.mobile.loading( "show", {
+			            text: msgText,
+			            textVisible: textVisible,
+			            theme: theme,
+			            textonly: textonly,
+			            html: html
+			    });
+			})
+			.on( "click", ".hide-page-loading-msg", function() {
+			    $.mobile.loading( "hide" );
+			});
+		</script>
+	</body>
+</html>
